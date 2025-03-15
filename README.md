@@ -56,5 +56,8 @@ postgres latest
     - Email = (空はダメ、長さは255文字以内、メールフォーマットに従うこと、ユニークなアドレス、大小文字に区別なし)
     - Password = (空はダメ、長さは6文字)
 
+## ER図
+![ER図](./README/ER図.png)
+
 ## 要素
 ![要素](./README/youso.png)
