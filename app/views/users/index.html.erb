@@ -1,0 +1,8 @@
+<% @user.each do |user| %>
+    <li>
+        <%= user.name%>|
+        <%= link_to user.email, user_path(user) %>|
+        <%= link_to "edit", edit_user_path(user) %>|
+        <%= link_to "delete", user, data: { "turbo-method": :delete, turbo_confirm: "You sure?" } %>
+    </li>
+<% end %>

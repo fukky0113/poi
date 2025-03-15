@@ -1,11 +1,11 @@
 <h1>poi</h1>
 <nav>
-    <%= link_to "ホーム", "#" %>
+    <%= link_to "ホーム", root_path %>
     <%= link_to "投稿", "#" %>
-    <%= link_to "マイページ", "#" %>
     <% if !logged_in? %>
         <%= link_to "ログイン", login_path %>
     <% else %>
+        <%= link_to "マイページ", user_path(current_user) %>
         <%= link_to "ログアウト", logout_path, data: {"turbo-method": :delete} %>
     <% end %>
 </nav>
