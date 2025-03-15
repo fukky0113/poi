@@ -1,7 +1,9 @@
 <h1>poi</h1>
 <nav>
-    <a href="#">ホーム</a>
-    <a href="#">投稿</a>
-    <a href="#">マイページ</a>
-    <a href="#">ログイン</a>
+    <%= link_to "ホーム", "#" %>
+    <%= link_to "投稿", "#" %>
+    <%= link_to "マイページ", "#" %>
+    <% if !logged_in? %>
+        <%= link_to "ログイン", login_path %>
+    <% end %>
 </nav>

@@ -1,0 +1,9 @@
+<h1>Sessions#new</h1>
+
+<%= form_with(url: login_path, scope: :session) do |f| %>
+    <%= f.email_field :email, placeholder: "メール" %>
+    <%= f.password_field :password, placeholder: "パスワード" %>
+    <%= f.submit "Login" %>
+<% end %>
+
+<p>新規ユーザーの登録はこちら <%= link_to "Sign up", new_user_path %></p>
