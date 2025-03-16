@@ -1,1 +1,5 @@
-show edit
+show 
+
+<% @comment.each do |comment| %>
+    <p><%= comment.comment %></p>
+<% end %>

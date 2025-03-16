@@ -1,1 +1,5 @@
 post index
+
+<% @post.each do |post| %>
+    <p><%= post.user_id %></p>
+<% end %>

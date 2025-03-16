@@ -42,6 +42,7 @@ gem "thruster", require: false
 
 # developer-add
 gem "bcrypt", "3.1.18"
+gem "faker", "2.21.0"
 gem "rails-controller-testing"
 
 group :development, :test do
