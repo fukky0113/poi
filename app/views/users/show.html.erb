@@ -1,9 +1,18 @@
 
 
+<h2>アカウント情報更新</h2>
 <%= link_to "edit", edit_user_path(current_user) %>
 
+<h2>メール</h2>
 <%= @user.email %>
-<% @comment.each do |comment| %>
-    <p><%= comment.comment %></p>
+
+<h2>ポスト一覧</h2>
+<% @post.each do |post| %>
+    <div>
+        <%= link_to post.description, user_post_path(user_id: current_user, id: post.id) %>
+        |
+        <%= link_to "削除", user_post_path(user_id: current_user, id: post.id), data: { "turbo-method": :delete,
+                                            turbo_confirm: "You sure?" } %>
+    </div>
 <% end %>
 

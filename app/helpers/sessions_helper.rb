@@ -22,6 +22,11 @@ module SessionsHelper
     end
   end
 
+  def correct_user
+    @user = User.find(params[:user_id])
+    redirect_to(root_url, status: :see_other) unless @user == current_user
+  end
+
   def logged_in?
     !current_user.nil?
   end

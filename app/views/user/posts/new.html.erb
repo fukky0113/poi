@@ -1,0 +1,6 @@
+<h1>Posts#new</h1>
+
+<%= form_with(model: [@user, @post]) do |f| %>
+    <%= f.text_field :description, placeholder: "説明" %>
+    <%= f.submit "post" %>
+<% end %>
