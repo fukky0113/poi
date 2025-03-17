@@ -1,5 +1,4 @@
-
-<main>
+<div class="mx-3 my-1">
     <!-- ヒーローエリア -->
     <h2>ヒーローエリア</h2>
 
@@ -7,11 +6,82 @@
     <h2>🗺️ ゴミの分布マップ</h2>
 
     <!-- 最新投稿 -->
-    <h2>📸 最新の投稿</h2>
+    <% if logged_in? %>
+        <h2><%= link_to "📸 最新の投稿", user_posts_path(user_id: current_user) %></h2>
+    <% else %>
+        <h2><%= link_to "📸 最新の投稿", login_path %></h2>
+    <% end %>
+    <div class="row">
+        <% @post.first(3).each do |post| %>
+            <div class="col-md-4">
+                <div class="card mx-3 my-3" style="">
+                    <% if post.image.attached? %>
+                        <%= image_tag post.image, size: "",  class: "d-block mx-auto img-fluid", style: "width: 100%; height: 200px; object-fit:cover;" %><br>
+                    <% else %>
+                        <img src="http://placehold.jp/150x150" class="d-block mx-auto img-fluid" style="width: 100%; height: 200px; object-fit:cover;"><br>
+                    <% end %>
+
+                    <div class="mx-1 my-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><%= post.created_at %></li>
+                            <li class="list-group-item"><%= post.user.name %></li>
+                            <li class="list-group-item">カテゴリ：<%= post.category.g_type %></li>
+                            <li class="list-group-item"><%= post.description %></li>
+
+                            <% if logged_in? %>
+                                <%= link_to "詳細", user_post_path(user_id: current_user, id: post.id), class: "btn btn-primary" %>
+                            <% else %>
+                                <%= link_to "詳細", login_path, class: "btn btn-primary" %>
+                            <% end %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+
 
     <!-- ランキング -->
     <h2>🏆 ランキング</h2>
-    <h3>📍 地域別ランキング</h3>
-    <h3>👤 ユーザーランキング</h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mx-3 my-3">
+                <div class="card-header">
+                    <h3>❤️ いいねランキング</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <% @user_ranking.each_with_index do |post, i| %>
+                        <li class="list-group-item"><%= i+1 %>位<%= @user.find(post).name %> </li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
 
-</main>
+
+        <div class="col-md-4">
+            <div class="card mx-3 my-3">
+                <div class="card-header">
+                    <h3>🌏 地域別ランキング</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <% @user_ranking.each_with_index do |post, i| %>
+                        <li class="list-group-item"><%= i+1 %>位<%= @user.find(post).name %> </li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mx-3 my-3">
+                <div class="card-header">
+                    <h3>👤 ユーザーランキング</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <% @user_ranking.each_with_index do |post, i| %>
+                        <li class="list-group-item"><%= i+1 %>位<%= @user.find(post).name %> </li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

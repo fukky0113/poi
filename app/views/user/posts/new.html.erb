@@ -1,15 +1,23 @@
-<h1>Posts#new</h1>
+<div class="d-flex justify-content-center  mt-5">
+  <div class="card shadow" style="width: 26rem">
+    <div class="card-body">
+        <h1 class="text-center card-title">Post</h1>
+          <%= form_with(model: [@user, @post]) do |f| %>
+            <div class="my-3">
+              <%= f.file_field :image, accept: "image/*" %>
+            </div>
 
-<%= form_with(model: [@user, @post]) do |f| %>
-  <div>
-    <%= f.label :images, "画像" %><br>
-    <%= f.file_field :image, accept: "image/*" %>
-  </div>
+            <div class="my-3">
+              カテゴリ:
+              <%= f.collection_select :category_id, Category.all, :id, :g_type %>
+            </div>
 
-  <%= f.text_field :description, placeholder: "説明" %>
-  <div>
-    カテゴリ:
-    <%= f.collection_select :category_id, Category.all, :id, :g_type %>
+            <div class="my-3">
+              <%= f.text_field :description, placeholder: "説明", class: "form-control w-100" %>
+            </div>
+
+            <%= f.submit "投稿", class: "btn btn-primary w-100" %>
+          <% end %>
+    </div>
   </div>
-  <%= f.submit "投稿" %>
-<% end %>
+</div>

@@ -3,7 +3,7 @@ class User::PostsController < ApplicationController
   before_action :correct_user, only: [:index, :new, :create, :show, :destroy]
 
   def index
-    @post = Post.all
+    @post = Post.all.order(created_at: "DESC")
   end
   
   def new

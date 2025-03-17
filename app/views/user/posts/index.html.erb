@@ -1,5 +1,26 @@
-post index
+<h1>投稿一覧</h1>
+<div class="my-5 mx-3">
+    <h2>📸投稿</h2>
+        <div class="row">
+            <% @post.each do |post| %>
+                <div class="col-md-4">
+                    <div class="card mx-3 my-3" style="">
+                        <% if post.image.attached? %>
+                            <%= image_tag post.image, size: "",  class: "d-block mx-auto img-fluid", style: "width: 100%; height: 200px; object-fit:cover;" %><br>
+                        <% else %>
+                            <img src="http://placehold.jp/150x150" class="d-block mx-auto img-fluid" style="width: 100%; height: 200px; object-fit:cover;"><br>
+                        <% end %>
+                        <p><%= post.created_at %>
+                        <p><%= post.user.name %></p>
+                        <p class="card-text"><%= post.description %></p>
 
-<% @post.each do |post| %>
-    <p><%= post.user_id %></p>
-<% end %>
+                        <%= post.category.g_type %>
+
+                        <%= link_to "詳細", user_post_path(user_id: current_user, id: post.id), class: "btn btn-primary" %>
+
+                    </div>
+                </div>
+            <% end %>
+        </div>
+</div>
+
