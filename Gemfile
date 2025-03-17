@@ -44,6 +44,10 @@ gem "thruster", require: false
 gem "bcrypt", "3.1.18"
 gem "faker", "2.21.0"
 gem "rails-controller-testing"
+gem "bootstrap", "~> 5.3.0"
+gem "jquery-rails"
+gem "sassc-rails"
+gem "mini_racer", "0.16.0"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
