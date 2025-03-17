@@ -1,7 +1,21 @@
 
-<%= @post.description %>
+<div>
+    ポスト内容
+    <%= @post.description %>
+</div>
 
-<p>ポストに対するコメント</p>
-<% @comment.each do |comment| %>
-    <p><%= comment.comment %></p>
-<% end %>
+<div>
+    ポストに対するコメント
+    <% @comment.each do |comment| %>
+        <div>
+            user_id :
+            <%= comment.user_id %>
+            , post_id :
+            <%= comment.post_id %>
+            , comment :
+            <%= comment.comment %>
+        </div>
+    <% end %>
+</div>
+
+<%= link_to "コメントを追加",  new_user_post_comment_path(user_id: @user, post_id: @post) %>

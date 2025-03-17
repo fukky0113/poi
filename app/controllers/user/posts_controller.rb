@@ -25,6 +25,7 @@ class User::PostsController < ApplicationController
   def show
     @comment = Comment.where(post_id: params[:id])
     @post = Post.find(params[:id])
+    @user = User.find(params[:user_id])
   end
 
   def destroy
@@ -34,7 +35,7 @@ class User::PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:description)
+    params.require(:post).permit(:comment)
   end
 
 end
