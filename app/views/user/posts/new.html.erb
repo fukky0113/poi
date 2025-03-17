@@ -1,10 +1,15 @@
 <h1>Posts#new</h1>
 
 <%= form_with(model: [@user, @post]) do |f| %>
-    <%= f.text_field :description, placeholder: "説明" %>
-    <div>
-        カテゴリ:
-        <%= f.collection_select :category_id, Category.all, :id, :g_type %>
-    </div>
-    <%= f.submit "投稿" %>
+  <div>
+    <%= f.label :images, "画像" %><br>
+    <%= f.file_field :image, accept: "image/*" %>
+  </div>
+
+  <%= f.text_field :description, placeholder: "説明" %>
+  <div>
+    カテゴリ:
+    <%= f.collection_select :category_id, Category.all, :id, :g_type %>
+  </div>
+  <%= f.submit "投稿" %>
 <% end %>

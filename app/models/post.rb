@@ -4,4 +4,6 @@ class Post < ApplicationRecord
 
   has_many :comments
 
+  # ActiveStorage向け
+  has_one_attached :image
 end

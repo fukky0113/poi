@@ -1,3 +1,10 @@
+<div>
+    <% if @post.image.attached? %>
+      <%= image_tag @post.image, size: "150x150" %><br>
+    <% else %>
+      <img src="http://placehold.jp/150x150"><br>
+    <% end %>
+</div>
 
 <div>
     ポスト内容
