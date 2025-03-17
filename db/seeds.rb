@@ -22,3 +22,10 @@ end
                password:              password,
                password_confirmation: password)
 end
+
+category = [ "可燃ごみ" ,"不燃ごみ","資源ごみ（紙類）","資源ごみ（プラスチック容器包装）","ペットボトル","ビン","缶","粗大ごみ","有害ごみ","家電リサイクル対象品"]
+
+category.each do |n|
+  Category.create!(g_type:  n)
+end
+
