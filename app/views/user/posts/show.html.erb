@@ -32,3 +32,33 @@
         </div>
     </div>
 <div>
+
+<div id='map'></div>
+<style>
+    #map{
+        height: 300px;
+    }
+</style>
+
+<script>
+    var map_lng
+    var marker
+
+    function initMap(){
+        console.log(gon.point)
+        if (gon.point[0] != null){
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: gon.point[0], lng: gon.point[1]},
+                zoom: 8
+            });
+        }
+        if (gon.point[0] != null){
+            position = {lat: gon.point[0], lng: gon.point[1]}
+            marker = new google.maps.Marker({
+                position: position,
+                map: map,
+            });
+        }
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUlzlxRykzbuGrjaKcDOl6AZhKUfGWCUA&callback=initMap" async defer></script>

@@ -13,7 +13,7 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    
+    <%= javascript_include_tag "turbo", type: "module" %>    
     <%= include_gon %>
     
     <%= javascript_importmap_tags %>

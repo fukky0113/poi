@@ -38,6 +38,8 @@ class User::PostsController < ApplicationController
     @comment = Comment.where(post_id: params[:id])
     @post = Post.find(params[:id])
     @user = User.find(params[:user_id])
+    gon.point = [@post.latitude, @post.longitude]
+
   end
 
   def destroy

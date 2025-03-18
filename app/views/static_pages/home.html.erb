@@ -14,7 +14,6 @@
         </style>
 
         <script>
-            let map
             var map_lng
             var marker
             var points
@@ -62,7 +61,7 @@
                             <li class="list-group-item">ユーザー：<%= post.user.name %></li>
                             <li class="list-group-item">カテゴリ：<%= post.category.g_type %></li>
                             <li class="list-group-item">地域　　：<%= post.point %></li>
-                            <li class="list-group-item"><%= post.description %></li>
+                            <li class="list-group-item"><%= post.description.slice(0,20) %>...</li>
 
                             <% if logged_in? %>
                                 <%= link_to "詳細", user_post_path(user_id: current_user, id: post.id), class: "btn btn-primary" %>
