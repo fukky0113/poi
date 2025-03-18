@@ -21,7 +21,6 @@
 
             function initMap(){
                 console.log(gon.points)
-                // points = document.getElementById('point').value
                 map = new google.maps.Map(document.getElementById('map'), {
                     center: {lat: 35.689, lng: 139.692},
                     zoom: 8
@@ -60,8 +59,9 @@
                     <div class="mx-1 my-3">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><%= post.created_at %></li>
-                            <li class="list-group-item"><%= post.user.name %></li>
+                            <li class="list-group-item">ユーザー：<%= post.user.name %></li>
                             <li class="list-group-item">カテゴリ：<%= post.category.g_type %></li>
+                            <li class="list-group-item">地域　　：<%= post.point %></li>
                             <li class="list-group-item"><%= post.description %></li>
 
                             <% if logged_in? %>
