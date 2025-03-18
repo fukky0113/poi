@@ -17,7 +17,6 @@
             </div>
 
             <!-- 地図機能↓ -->
-
             <input class="form-control", id="point", type="text">
             <button type="button", class="btn btn-primary", id="add-point-search-date-btn">検索</button>
 
@@ -68,7 +67,7 @@
                 marker = new google.maps.Marker();
 
                 map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644},
+                center: {lat: 35.689, lng: 139.692},
                 zoom: 8
                 });
 
@@ -80,21 +79,7 @@
                     map_lat.value = event.latLng.lat();
                     map_lng.value = event.latLng.lng();
                 }
-
-                geocoder = new google.maps.Geocoder()
-                geocoder.geocode({
-                  latLng: latlng
-                  }, function(results, status) {
-                    if (status == OK) {
-                      if (results[0].geometry) {
-                        var address = results[0].formatted_address.replace(/^日本, /, '');
-                        console.log(address);
-                      }
-                    }
-                });
               }
-                
-                
             </script>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUlzlxRykzbuGrjaKcDOl6AZhKUfGWCUA&callback=initMap" async defer></script>
             <!-- 地図機能↑ -->

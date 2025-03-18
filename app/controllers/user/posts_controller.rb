@@ -15,9 +15,16 @@ class User::PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = params[:user_id]
 
-    results = Geocoder.search([48.856614, 2.3522219])
-
+    results = Geocoder.search([@post.latitude, @post.longitude],  params: { 'accept-language': 'ja' })
+    
+    @post.point = "不明"
     if results.first
+      points = results.first.address.split(",")
+      points.each do |point|
+        if point[-1] == "都" or point[-1] == "道" or point[-1] == "府" or point[-1] == "県" 
+          @post.point = point.gsub(" ","")
+        end
+      end
     end
 
     if @post.save
