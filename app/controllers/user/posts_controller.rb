@@ -15,6 +15,11 @@ class User::PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = params[:user_id]
 
+    results = Geocoder.search([48.856614, 2.3522219])
+
+    if results.first
+    end
+
     if @post.save
       redirect_to root_path, status: :see_other
     else
@@ -35,7 +40,7 @@ class User::PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:image, :description, :category_id)
+    params.require(:post).permit(:image, :description, :category_id, :latitude, :longitude)
   end
 
 end

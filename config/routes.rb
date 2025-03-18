@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :users, param: :user_id
   namespace :user, path: 'users/:user_id/' do
-    resources :posts do
+    resources :posts do 
       resources :comments, only: [:new, :create, :destroy]
       resource :favorites, only: [:create, :destroy]
     end
