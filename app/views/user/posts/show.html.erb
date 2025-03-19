@@ -20,26 +20,28 @@
                     <li class="list-group-item"><%= @post.point %></li>
                     <li class="list-group-item"><%= @post.description %></li>
                     <li class="list-group-item"><%= @post.category.g_type %></li>
+                    <li class="list-group-item"><%=image_tag("like_on.png", size: '24x24', class: "mb-1")%>：<%= @post.favorites.count %></li>
+
                 </ul>
                 <div class="my-3">
                     <h5>コメント</h5>
-                    <ul class="list-group list-group-flush">
-                    <% @comment.each do |comment| %>
-                        <li class="list-group-item">
-                            @<%= link_to comment.user.name, user_path(@user) %>
-                            <br>
-                            <%= comment.comment %>
-                        </li>
-                    <% end %>
-                    </ul>
+                    <div class="overflow-auto" style="height:150px;">
+                        <ul class="list-group list-group-flush">
+                        <% @comment.each do |comment| %>
+                            <li class="list-group-item">
+                                @<%= link_to comment.user.name, user_path(@user) %>
+                                <br>
+                                <%= comment.comment %>
+                            </li>
+                        <% end %>
+                        </ul>
+                    </div>
                 </div>
-
+            
                 <%= form_with(url: user_post_comments_path(@user, @post)) do |f| %>
                     <%= f.text_field :comment, placeholder: "コメント" %>
                     <%= f.submit "post" %>
                 <% end %>
-
-                <%= link_to "コメントを追加",  new_user_post_comment_path(user_id: @user, post_id: @post) %>
             </div>
         </div>
     </div>
