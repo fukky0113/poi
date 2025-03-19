@@ -7,6 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+require "csv"
+
 User.find_or_create_by(email: "onetime@onetime.com") do |user|
   user.name = "onetime"
   user.password = "onetime"
@@ -29,3 +31,13 @@ category.each do |n|
   Category.create!(g_type:  n)
 end
 
+CSV.foreach('db/dataset/city_code.csv', headers: true) do |row|
+  Post.create(
+    user_id: 1,
+    description: "description",
+    category_id: 1,
+    latitude: row['lat'].to_f,
+    longitude: row['lng'].to_f,
+    point: row['prefname']
+  )
+end
