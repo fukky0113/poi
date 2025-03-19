@@ -107,11 +107,11 @@
         <div class="col-md-4">
             <div class="card mx-3 my-3">
                 <div class="card-header">
-                    <h3>❤️ いいねランキング</h3>
+                    <h3>👤 投稿数ランキング</h3>
                 </div>
                 <ul class="list-group list-group-flush">
                     <% @user_ranking.each_with_index do |post, i| %>
-                        <li class="list-group-item"><%= i+1 %>位<%= @user.find(post).name %> </li>
+                        <li class="list-group-item"><%= i+1 %>位：<%= @user.find(post).name %>(<%= Post.where(user_id: post).count%>)</li>
                     <% end %>
                 </ul>
             </div>
@@ -124,8 +124,8 @@
                     <h3>🌏 地域別ランキング</h3>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <% @user_ranking.each_with_index do |post, i| %>
-                        <li class="list-group-item"><%= i+1 %>位<%= @user.find(post).name %> </li>
+                    <% @area_ranking.each_with_index do |area, i| %>
+                        <li class="list-group-item"><%= i+1 %>位：<%= area %>(<%= Post.where(point: area).count%>)</li>
                     <% end %>
                 </ul>
             </div>
@@ -134,11 +134,11 @@
         <div class="col-md-4">
             <div class="card mx-3 my-3">
                 <div class="card-header">
-                    <h3>👤 ユーザーランキング</h3>
+                    <h3>❤️ いいねランキング</h3>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <% @user_ranking.each_with_index do |post, i| %>
-                        <li class="list-group-item"><%= i+1 %>位<%= @user.find(post).name %> </li>
+                    <% @fav_ranking.each_with_index do |fav, i| %>
+                        <li class="list-group-item"><%= i+1 %>位：<%= @post.find(fav).description.slice(0,20) %>(<%= Favorite.where(post_id: fav).count%>)</li>
                     <% end %>
                 </ul>
             </div>
