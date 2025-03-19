@@ -14,13 +14,14 @@
         
         <div class="col-md-8">
             <div class="card-body">
+                <h5>投稿</h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><%= @post.point %></li>
                     <li class="list-group-item"><%= @post.description %></li>
                     <li class="list-group-item"><%= @post.category.g_type %></li>
                 </ul>
-                <div>
-                    コメント：
+                <div class="my-3">
+                    <h5>コメント</h5>
                     <ul class="list-group list-group-flush">
                     <% @comment.each do |comment| %>
                             <li class="list-group-item">@<%= comment.user.name %><br><%= comment.comment %></li>

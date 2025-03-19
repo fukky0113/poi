@@ -24,6 +24,10 @@
 <div class="my-5 mx-3">
     <h2>📸投稿</h2>
         <div class="row">
+            <div style="display: grid; justify-items: center; align-content: center;">
+                <%= paginate @post, theme: 'bootstrap-5'%>
+            </div>
+
             <% @post.each do |post| %>
                 <div class="col-md-4">
                     <div class="card mx-3 my-3" style="">
@@ -64,6 +68,10 @@
                     </div>
                 </div>
             <% end %>
+
+            <div style="display: grid; justify-items: center; align-content: center;">
+                <%= paginate @post, theme: 'bootstrap-5'%>
+            </div>
         </div>
 </div>
 

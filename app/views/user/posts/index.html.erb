@@ -3,6 +3,9 @@
     <div class="my-5 mx-3">
         <h2>📸投稿</h2>
             <div class="row">
+                <div style="display: grid; justify-items: center; align-content: center;">
+                    <%= paginate @post, theme: 'bootstrap-5'%>
+                </div>
                 <% @post.each do |post| %>
                     <div class="col-md-4">
                         <div class="card mx-3 my-3" style="">
@@ -19,6 +22,11 @@
                                     <li class="list-group-item">カテゴリ：<%= post.category.g_type %></li>
                                     <li class="list-group-item">地域　　：<%= post.point %></li>
                                     <li class="list-group-item"><%= post.description.slice(0,20) %>...</li>
+                                    <% if logged_in? %>
+                                        <%= link_to "詳細", user_post_path(user_id: current_user, id: post.id), class: "btn btn-primary" %>
+                                    <% else %>
+                                        <%= link_to "詳細", login_path, class: "btn btn-primary" %>
+                                    <% end %>
                                 </ul>
 
                                 <% if post.favorited_by?(current_user, post) %>
@@ -40,6 +48,9 @@
                         </div>
                     </div>
                 <% end %>
+                <div style="display: grid; justify-items: center; align-content: center;">
+                    <%= paginate @post, theme: 'bootstrap-5'%>
+                </div>
             </div>
     </div>
 </div>
