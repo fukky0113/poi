@@ -1,0 +1,36 @@
+<!-- マップエリア -->
+<h2>🗺️ ゴミの分布マップ</h2>
+<div class="mx-3 my-3">
+    <input type="hidden" id="point" value=<%= @post %>>
+    <div id='map'></div>
+    <style>
+        #map{
+            height: 400px;
+        }
+    </style>
+
+    <script>
+        var map_lng
+        var marker
+        var points
+
+        function initMap(){
+            // console.log(gon.points)
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 35.689, lng: 139.692},
+                zoom: 8
+            });
+
+            for (var i=0; i < gon.points.length; i++){
+                if (gon.points[i][0] != null){
+                    position = {lat: gon.points[i][0], lng: gon.points[i][1]}
+                    marker = new google.maps.Marker({
+                        position: position,
+                        map: map,
+                    });
+                }
+            }
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUlzlxRykzbuGrjaKcDOl6AZhKUfGWCUA&callback=initMap" async defer></script>
+</div>
