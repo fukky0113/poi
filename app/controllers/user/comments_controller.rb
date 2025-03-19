@@ -3,9 +3,10 @@ class User::CommentsController < ApplicationController
   before_action :correct_user, only: [:create]
 
   def create 
-    @comment = Comment.new(comments_params)
+    @comment = Comment.new
     @comment.user_id = params[:user_id]
     @comment.post_id = params[:post_id]
+    @comment.comment = params[:comment]
 
     if @comment.save
       redirect_to user_post_path(user_id: @comment.user_id, id: @comment.post_id), status: :see_other
@@ -23,10 +24,4 @@ class User::CommentsController < ApplicationController
   def destroy
 
   end
-
-  private
-  def comments_params
-    params.require(:comment).permit(:comment)
-  end
-
 end

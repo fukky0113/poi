@@ -1,56 +1,58 @@
 <div class="mx-3 my-1">
-    <h1>投稿一覧</h1>
+    <h1>📸投稿一覧</h1>
     <div class="my-5 mx-3">
-        <h2>📸投稿</h2>
-            <div class="row">
-                <div style="display: grid; justify-items: center; align-content: center;">
-                    <%= paginate @post, theme: 'bootstrap-5'%>
-                </div>
-                <% @post.each do |post| %>
-                    <div class="col-md-4">
-                        <div class="card mx-3 my-3" style="">
-                            <% if post.image.attached? %>
-                                <%= image_tag post.image, size: "",  class: "d-block mx-auto img-fluid", style: "width: 100%; height: 200px; object-fit:cover;" %><br>
-                            <% else %>
-                                <img src="http://placehold.jp/150x150" class="d-block mx-auto img-fluid" style="width: 100%; height: 200px; object-fit:cover;"><br>
-                            <% end %>
+        <div class="row">
+            <div style="display: grid; justify-items: center; align-content: center;">
+                <%= paginate @post, theme: 'bootstrap-5'%>
+            </div>
+            <% @post.each do |post| %>
+                <div class="col-md-4">
+                    <div class="card mx-3 my-3" style="">
+                        <% if post.image.attached? %>
+                            <%= image_tag post.image, size: "",  class: "d-block mx-auto img-fluid", style: "width: 100%; height: 200px; object-fit:cover;" %><br>
+                        <% else %>
+                            <img src="http://placehold.jp/150x150" class="d-block mx-auto img-fluid" style="width: 100%; height: 200px; object-fit:cover;"><br>
+                        <% end %>
 
-                            <div class="mx-1 my-3">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><%= post.created_at %></li>
-                                    <li class="list-group-item">ユーザー：<%= post.user.name %></li>
-                                    <li class="list-group-item">カテゴリ：<%= post.category.g_type %></li>
-                                    <li class="list-group-item">地域　　：<%= post.point %></li>
-                                    <li class="list-group-item"><%= post.description.slice(0,20) %>...</li>
+                        <div class="mx-1 my-3">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><%= post.created_at %></li>
+                                <li class="list-group-item">ユーザー：<%= post.user.name %></li>
+                                <li class="list-group-item">カテゴリ：<%= post.category.g_type %></li>
+                                <li class="list-group-item">地域　　：<%= post.point %></li>
+                                <li class="list-group-item"><%= post.description.slice(0,20) %>...</li>
+                                <div class="my-1 mx-3" style="  display: flex; justify-content: flex-end;">
                                     <% if logged_in? %>
-                                        <%= link_to "詳細", user_post_path(user_id: current_user, id: post.id), class: "btn btn-primary" %>
+                                        <% if post.favorited_by?(current_user, post) %>
+                                            <%= link_to image_tag("like_off.png", size: '24x24'), user_post_favorites_path(user_id: current_user, post_id: post.id), data: { "turbo-method": :delete } %>
+                                            ：
+                                            <%= post.favorites.count %>
+                                        <% else %>
+                                            <%= link_to image_tag("like_on.png", size: '24x24'), user_post_favorites_path(user_id: current_user, post_id: post.id), data: { "turbo-method": :post } %>
+                                            ：
+                                            <%= post.favorites.count %>
+                                        <% end %>
                                     <% else %>
-                                        <%= link_to "詳細", login_path, class: "btn btn-primary" %>
+                                        <p>
+                                            <%= image_tag("like_off.png", size: '24x24') %>
+                                            <%= post.favorites.count %>
+                                        </p>
                                     <% end %>
-                                </ul>
+                                </div>
 
-                                <% if post.favorited_by?(current_user, post) %>
-                                    <p>
-                                        <span>
-                                            お気に入り解除: 
-                                        </span>
-                                        <%= link_to post.favorites.count, user_post_favorites_path(user_id: current_user, post_id: post.id), data: { "turbo-method": :delete } %>
-                                    </p>
-                                <% else %>
-                                    <p>
-                                        <span>
-                                            お気に入り登録: 
-                                        </span>
-                                        <%= link_to post.favorites.count, user_post_favorites_path(user_id: current_user, post_id: post.id), data: { "turbo-method": :post } %>
-                                    </p>
+                                <% if current_user.admin? %>
+                                    <%= link_to "削除", user_post_path(user_id: current_user, id: post.id), data: { "turbo-method": :delete,
+                                                            turbo_confirm: "You sure?" } %>
                                 <% end %>
-                            </div>
+                                <%= link_to "詳細", user_post_path(user_id: current_user, id: post.id), class: "btn btn-primary" %>
+                            </ul>
                         </div>
                     </div>
-                <% end %>
-                <div style="display: grid; justify-items: center; align-content: center;">
-                    <%= paginate @post, theme: 'bootstrap-5'%>
                 </div>
+            <% end %>
+            <div style="display: grid; justify-items: center; align-content: center;">
+                <%= paginate @post, theme: 'bootstrap-5'%>
             </div>
+        </div>
     </div>
 </div>

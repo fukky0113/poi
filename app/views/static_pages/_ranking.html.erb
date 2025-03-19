@@ -8,7 +8,7 @@
             </div>
             <ul class="list-group list-group-flush">
                 <% @user_ranking.each_with_index do |post, i| %>
-                    <li class="list-group-item"><%= i+1 %>位：<%= @user.find(post).name %>(<%= Post.where(user_id: post).count%>)</li>
+                    <li class="list-group-item"><%= i+1 %>位：<%= link_to @user.find(post).name, user_path(post) %>(<%= Post.where(user_id: post).count%>)</li>
                 <% end %>
             </ul>
         </div>

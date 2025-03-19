@@ -1,6 +1,6 @@
 <!-- 最新投稿 -->
 <% if logged_in? %>
-    <h2><%= link_to "📸 最新の投稿", user_posts_path(user_id: current_user) %></h2>
+    <h2><%= link_to "📸 最新の投稿", user_posts_path(user_id: current_user), class: "link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" %></h2>
 <% else %>
     <h2><%= link_to "📸 最新の投稿", login_path %></h2>
 <% end %>
@@ -17,10 +17,29 @@
                 <div class="mx-1 my-3">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><%= post.created_at %></li>
-                        <li class="list-group-item">ユーザー：<%= post.user.name %></li>
+                        <li class="list-group-item">ユーザー：@<%= link_to post.user.name, user_path(post.user_id) %></li>
                         <li class="list-group-item">カテゴリ：<%= post.category.g_type %></li>
                         <li class="list-group-item">地域　　：<%= post.point %></li>
                         <li class="list-group-item"><%= post.description.slice(0,20) %>...</li>
+
+                        <div class="my-1 mx-3" style="  display: flex; justify-content: flex-end;">
+                            <% if logged_in? %>
+                                <% if post.favorited_by?(current_user, post) %>
+                                    <%= link_to image_tag("like_off.png", size: '24x24'), user_post_favorites_path(user_id: current_user, post_id: post.id), data: { "turbo-method": :delete } %>
+                                    ：
+                                    <%= post.favorites.count %>
+                                <% else %>
+                                    <%= link_to image_tag("like_on.png", size: '24x24'), user_post_favorites_path(user_id: current_user, post_id: post.id), data: { "turbo-method": :post } %>
+                                    ：
+                                    <%= post.favorites.count %>
+                                <% end %>
+                            <% else %>
+                                <p>
+                                    <%= image_tag("like_off.png", size: '24x24') %>
+                                    <%= post.favorites.count %>
+                                </p>
+                            <% end %>
+                        </div>
 
                         <% if logged_in? %>
                             <%= link_to "詳細", user_post_path(user_id: current_user, id: post.id), class: "btn btn-primary" %>
@@ -28,31 +47,6 @@
                             <%= link_to "詳細", login_path, class: "btn btn-primary" %>
                         <% end %>
                     </ul>
-
-                    <% if logged_in? %>
-                        <% if post.favorited_by?(current_user, post) %>
-                            <p>
-                                <span>
-                                    お気に入り解除: 
-                                </span>
-                                <%= link_to post.favorites.count, user_post_favorites_path(user_id: current_user, post_id: post.id), data: { "turbo-method": :delete } %>
-                            </p>
-                        <% else %>
-                            <p>
-                                <span>
-                                    お気に入り登録: 
-                                </span>
-                                <%= link_to post.favorites.count, user_post_favorites_path(user_id: current_user, post_id: post.id), data: { "turbo-method": :post } %>
-                            </p>
-                        <% end %>
-                    <% else %>
-                        <p>
-                            <span>
-                                お気に入り登録: 
-                            </span>
-                            <%= post.favorites.count %>
-                        </p>
-                    <% end %>
                 </div>
             </div>
         </div>

@@ -13,6 +13,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def admin_user
+    unless current_user.admin
+      redirect_to root_path, status: :see_other
+    end
+  end
+
   def post_point_count(area_ranking)
     rank = []
     total = 0

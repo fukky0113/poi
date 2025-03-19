@@ -1,8 +1,25 @@
-<% @user.each do |user| %>
-    <li>
-        <%= user.name%>|
-        <%= link_to user.email, user_path(user) %>|
-        <%= link_to "edit", edit_user_path(user) %>|
-        <%= link_to "delete", user, data: { "turbo-method": :delete, turbo_confirm: "You sure?" } %>
-    </li>
-<% end %>
+<div class="card text-center mx-5 my-3  shadow">
+    <div class="card-body">
+        <h1 class="card-title">Index</h1>
+
+        <ol class="list-group mx-5 my-3 list-group-numbered text-start">
+
+            <% @user.each do |user| %>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"><%= link_to user.name, user_path(user)%></div>
+                        <%= user.email %>
+
+                        <% if current_user.admin? && !current_user?(user) %>
+                            <%= link_to "edit", edit_user_path(user) %>|
+                            <%= link_to "delete", user, data: { "turbo-method": :delete, turbo_confirm: "You sure?" } %>
+                        <% else %>
+                            | current user
+                        <% end %>
+                    </div>
+                </li>
+            <% end %>
+
+        </ol>
+    </div>
+</div>

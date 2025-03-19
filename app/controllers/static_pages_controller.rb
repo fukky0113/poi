@@ -6,6 +6,7 @@ class StaticPagesController < ApplicationController
 
     @user_ranking = Post.group(:user_id).order('count(user_id) DESC').limit(3).pluck(:user_id)
     @fav_ranking = Favorite.group(:post_id).order('count(post_id) DESC').limit(3).pluck(:post_id)
+    
     @area_ranking = Post.group(:point).order('count(point) DESC').pluck(:point)
     gon.area_ranking = @area_ranking.slice(0,10)
     gon.area_ranking_count = post_point_count(@area_ranking.slice(0,10))

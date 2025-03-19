@@ -16,6 +16,7 @@
             <div class="card-body">
                 <h5>投稿</h5>
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@<%= link_to @post.user.name, user_path(@user) %></li>
                     <li class="list-group-item"><%= @post.point %></li>
                     <li class="list-group-item"><%= @post.description %></li>
                     <li class="list-group-item"><%= @post.category.g_type %></li>
@@ -24,10 +25,20 @@
                     <h5>コメント</h5>
                     <ul class="list-group list-group-flush">
                     <% @comment.each do |comment| %>
-                            <li class="list-group-item">@<%= comment.user.name %><br><%= comment.comment %></li>
+                        <li class="list-group-item">
+                            @<%= link_to comment.user.name, user_path(@user) %>
+                            <br>
+                            <%= comment.comment %>
+                        </li>
                     <% end %>
                     </ul>
                 </div>
+
+                <%= form_with(url: user_post_comments_path(@user, @post)) do |f| %>
+                    <%= f.text_field :comment, placeholder: "コメント" %>
+                    <%= f.submit "post" %>
+                <% end %>
+
                 <%= link_to "コメントを追加",  new_user_post_comment_path(user_id: @user, post_id: @post) %>
             </div>
         </div>

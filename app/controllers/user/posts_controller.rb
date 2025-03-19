@@ -45,7 +45,7 @@ class User::PostsController < ApplicationController
 
   def destroy
     Post.find(params[:id]).destroy
-    redirect_to user_path, status: :see_other
+    redirect_to request.referer, status: :see_other
   end
 
   private
