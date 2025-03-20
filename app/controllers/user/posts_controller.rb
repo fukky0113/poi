@@ -1,6 +1,6 @@
 class User::PostsController < ApplicationController
   before_action :logged_in_user, only: [:index, :new, :create, :show, :destroy]
-  before_action :correct_user, only: [:index, :new, :create, :show, :destroy]
+  before_action :correct_user, only: [:index, :new, :create, :show]
 
   def index
     @post = Post.all.order(created_at: "DESC")
@@ -39,8 +39,8 @@ class User::PostsController < ApplicationController
     @comment = Comment.where(post_id: params[:id])
     @post = Post.find(params[:id])
     @user = User.find(params[:user_id])
+    @category = Category.find(@post.category_id)
     gon.point = [@post.latitude, @post.longitude]
-
   end
 
   def destroy

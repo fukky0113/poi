@@ -1,9 +1,11 @@
-user1:
+user:
   name: "hogefuga"
   email: "hogefuga@hogefuga.hogefuga"
   password_digest: <%= User.digest('password') %>
+  admin: false
 
-user2:
-  name: "Sterling Archer"
-  email: "Sterling@Sterling.Sterling"
+admin_user:
+  name: "piyopiyo"
+  email: "piyopiyo@piyopiyo.piyopiyo"
   password_digest: <%= User.digest('password') %>
+  admin: true

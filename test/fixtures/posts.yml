@@ -1,1 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+post:
+  user_id: user.id
+  description: "samplesample"
+  category_id: category.id
+  latitude: 36.01
+  longitude: 136.01
+  point: "群馬県"

@@ -14,9 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_user
-    unless current_user.admin
-      redirect_to root_path, status: :see_other
-    end
+      (redirect_to root_path, status: :see_other) if !current_user.admin?
   end
 
   def post_point_count(area_ranking)
