@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   private
-  
+
   def logged_in_user
     unless logged_in?
       store_location
@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
       total += count
     end
     rank.push(Post.count-total)
-    return rank
+    rank
   end
 
   def post_category_count(category_chart)
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
       count = Post.where(category_id: category).count
       rank.push(count)
     end
-    return rank
+    rank
   end
 
   def id2name(category_chart)
@@ -44,6 +44,6 @@ class ApplicationController < ActionController::Base
       name = Category.find(category).g_type
       ret.push(name)
     end
-    return ret
+    ret
   end
 end

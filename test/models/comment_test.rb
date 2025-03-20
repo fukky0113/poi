@@ -25,7 +25,7 @@ class CommentTest < ActiveSupport::TestCase
     @comment.comment = " "
     assert_not @comment.valid?
   end
-  
+
   test "comment should not be too long" do
     @comment.comment = "z" * 256
     assert_not @user.valid?

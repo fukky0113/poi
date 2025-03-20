@@ -52,18 +52,17 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   # test delete
   test "Redirect at destroy time" do
     log_in_as(@user)
-    assert_difference 'Post.count', -1 do
-      delete user_post_path(user_id: @user.id, id: @post.id), headers: {'HTTP_REFERER' => root_path}
+    assert_difference "Post.count", -1 do
+      delete user_post_path(user_id: @user.id, id: @post.id), headers: { "HTTP_REFERER" => root_path }
     end
     assert_response :see_other
   end
 
   test "should not delete (not log in)" do
-    assert_no_difference 'Post.count' do
-      delete user_post_path(user_id: @user.id, id: @post.id), headers: {'HTTP_REFERER' => root_path}
+    assert_no_difference "Post.count" do
+      delete user_post_path(user_id: @user.id, id: @post.id), headers: { "HTTP_REFERER" => root_path }
     end
     assert_response :see_other
     assert_redirected_to login_path
   end
-
 end

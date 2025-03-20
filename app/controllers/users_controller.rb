@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :show, :destroy] 
-  before_action :correct_user, only: [:edit, :update] 
-  before_action :admin_user, only: [:index, :destroy]
+  before_action :logged_in_user, only: [ :index, :edit, :update, :show, :destroy ]
+  before_action :correct_user, only: [ :edit, :update ]
+  before_action :admin_user, only: [ :index, :destroy ]
 
   def new
     @user = User.new
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       log_in @user
       redirect_to @user, status: :see_other
     else
-      render 'new', status: :unprocessable_entity
+      render "new", status: :unprocessable_entity
     end
   end
 
@@ -35,8 +35,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:user_id])
     if @user.update(user_params)
       redirect_to @user, status: :see_other
-    else 
-      render 'edit', status: :unprocessable_entity
+    else
+      render "edit", status: :unprocessable_entity
     end
   end
 
@@ -45,9 +45,8 @@ class UsersController < ApplicationController
     redirect_to user_path, status: :see_other
   end
 
-  private 
+  private
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
-
 end

@@ -1,5 +1,4 @@
 class User::FavoritesController < ApplicationController
-
   def create
     @favorite = Favorite.new
     @favorite.user_id = params[:user_id]
@@ -12,5 +11,4 @@ class User::FavoritesController < ApplicationController
     Favorite.find_by(user_id: params[:user_id], post_id: params[:post_id]).destroy
     redirect_to request.referer
   end
-
 end

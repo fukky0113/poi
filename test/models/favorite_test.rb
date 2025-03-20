@@ -20,5 +20,4 @@ class FavoriteTest < ActiveSupport::TestCase
     @favo.post_id = " "
     assert_not @favo.valid?
   end
-
 end

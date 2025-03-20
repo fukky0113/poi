@@ -49,10 +49,10 @@ gem "jquery-rails"
 gem "sassc-rails"
 gem "mini_racer", "0.16.0"
 gem "geocoder"
-gem 'gon'
-gem 'kaminari'
-gem 'bootstrap5-kaminari-views'
-gem 'dotenv-rails'
+gem "gon"
+gem "kaminari"
+gem "bootstrap5-kaminari-views"
+gem "dotenv-rails"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -74,4 +74,11 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+end
+
+group :development, :test do
+  gem "brakeman"
+  gem "bundler-audit"
+  gem "rubocop-rails"
+  gem "rubocop"
 end

@@ -5,7 +5,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:user)
   end
 
-  #test new
+  # test new
   test "should get new" do
     get login_path
     assert_response :success
@@ -15,7 +15,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "should create session" do
     get login_path
     post login_path, params: { session: { email: "hogefuga@hogefuga.hogefuga",
-                                          password: "password"} }
+                                          password: "password" } }
     assert_response :see_other
     assert_redirected_to root_path
   end
@@ -23,7 +23,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "should not create session (incorrect user)" do
     get login_path
     post login_path, params: { session: { email: "incorrect@hogefuga.hogefuga",
-                                          password: "password"} }
+                                          password: "password" } }
     assert_response :unprocessable_entity
     assert_template "sessions/new"
   end
@@ -43,5 +43,4 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :see_other
     assert_redirected_to root_url
   end
-
 end

@@ -1,8 +1,8 @@
 class User::CommentsController < ApplicationController
-  before_action :logged_in_user, only: [:create]
-  before_action :correct_user, only: [:create]
+  before_action :logged_in_user, only: [ :create ]
+  before_action :correct_user, only: [ :create ]
 
-  def create 
+  def create
     @comment = Comment.new
     @comment.user_id = params[:user_id]
     @comment.post_id = params[:post_id]
@@ -11,7 +11,7 @@ class User::CommentsController < ApplicationController
     if @comment.save
       redirect_to user_post_path(user_id: @comment.user_id, id: @comment.post_id), status: :see_other
     else
-      render 'new', status: :unprocessable_entity
+      render "new", status: :unprocessable_entity
     end
   end
 
@@ -22,6 +22,5 @@ class User::CommentsController < ApplicationController
   end
 
   def destroy
-
   end
 end

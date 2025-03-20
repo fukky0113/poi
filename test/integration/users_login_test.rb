@@ -13,7 +13,7 @@ class InvalidPasswordTest < UsersLogin
   end
 
   test "login with valid email/invalid password" do
-    post login_path, params: {session: {email: "", password: ""}}
+    post login_path, params: { session: { email: "", password: "" } }
     assert_not is_logged_in?
     assert_response :unprocessable_entity
     assert_template "sessions/new"
@@ -24,13 +24,13 @@ end
 class ValidLogin < UsersLogin
   def setup
     super
-    post login_path, params: {session: {email: @user.email, password: 'password' } }
+    post login_path, params: { session: { email: @user.email, password: "password" } }
   end
 end
 
 class ValidLoginTest < ValidLogin
   test "valid login" do
-    assert is_logged_in? 
+    assert is_logged_in?
     assert_redirected_to root_url
   end
 end

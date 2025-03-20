@@ -1,0 +1,181 @@
+# This workflow uses actions that are not certified by GitHub.  They are
+# provided by a third-party and are governed by separate terms of service,
+# privacy policy, and support documentation.
+#
+# This workflow will install a prebuilt Ruby version, install dependencies, and
+# run tests and linters.
+name: "Ruby on Rails CI and AWS ECR ECS CD"
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  AWS_REGION: ap-northeast-1
+  ECS_SERVICE: iam-alb-service
+  ECS_CLUSTER: Iam-cluster
+  ECS_TASK_DEFINITION: .aws/task-definition.json
+
+jobs:
+  test_rails:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11-alpine
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: rails
+          POSTGRES_PASSWORD: password
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # Add or replace dependency steps here
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@78c01b705fd9d5ad960d432d3a0cfa341d50e410 # v1.179.1
+        with:
+          bundler-cache: true
+      # Add or replace database setup steps here
+      - name: Set up database schema
+        run: bin/rails db:schema:load
+      # Add or replace test runners here
+      - name: Run tests
+        run: bin/rake
+
+  test_rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@78c01b705fd9d5ad960d432d3a0cfa341d50e410 # v1.179.1
+        with:
+          bundler-cache: true
+      - name: Generate binstubs
+        run: bundle binstubs bundler-audit brakeman rubocop
+      # Add or replace any other lints here
+      - name: Security audit dependencies
+        run: bundle exec bundle audit --update
+      - name: Security audit application code
+        run: bundle exec brakeman -q -w2
+      - name: Lint Ruby files
+        run: bundle exec rubocop --parallel
+
+  build_api:
+    name: Api Container Build
+    runs-on: ubuntu-latest
+    needs: [test_rails, test_rubocop]
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build an Image and Run Tests
+        run: |
+          docker image build --platform linux/amd64 -t api_image:latest .
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Push the image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.AWS_ECR_API_SERVER_REPOSITORY }}
+        run: |
+          docker image tag api_image:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+  build_web:
+    name: Web Container Build
+    runs-on: ubuntu-latest
+    needs: [test_rails, test_rubocop]
+    timeout-minutes: 10
+    
+    defaults:
+      run:
+        working-directory: containers/nginx
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build an Image and Run Tests
+        run: |
+          docker image build --platform linux/amd64 -t web_image:latest .
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Push the image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.AWS_ECR_WEB_SERVER_REPOSITORY }}
+        run: |
+          docker image tag web_image:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+  
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [build_api, build_web]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Fill in the new image ID in the Amazon ECS task definition for web
+        id: render-web-task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: nginx
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_WEB_SERVER_REPOSITORY }}
+
+      - name: Fill in the new image ID in the Amazon ECS task definition for api
+        id: render-api-task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-web-task-def.outputs.task-definition }}
+          container-name: rails
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_API_SERVER_REPOSITORY }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.render-api-task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true

@@ -8,7 +8,7 @@ class Post < ApplicationRecord
   # ActiveStorage向け
   has_one_attached :image
 
-  validates :description, presence: true, length: {maximum: 255}
+  validates :description, presence: true, length: { maximum: 255 }
   validates :category_id, presence: true
   validates :latitude, presence: true
   validates :longitude, presence: true

@@ -6,11 +6,11 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       reset_session
-      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+      params[:session][:remember_me] == "1" ? remember(user) : forget(user)
       log_in user
       redirect_to root_path, status: :see_other
     else
-      render 'new', status: :unprocessable_entity
+      render "new", status: :unprocessable_entity
     end
   end
 

@@ -8,7 +8,7 @@ class CategoryTest < ActiveSupport::TestCase
   test "should be valid" do
     assert @category.valid?
   end
-  
+
   test "g_type should be valid" do
     @category.g_type = " "
     assert_not @category.valid?
