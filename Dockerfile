@@ -6,6 +6,8 @@ COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
 COPY . /myapp
+RUN mkdir -p tmp/pids
+RUN mkdir -p tmp/sockets
 
 # コンテナー起動時に毎回実行されるスクリプトを追加
 COPY entrypoint.sh /usr/bin/

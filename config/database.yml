@@ -83,8 +83,30 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
+  primary: &primary_production
     <<: *default
-    database: myapp_production
-    username: myapp
+    database: myapp_prod
+    username: postgres
     host: <%= ENV["DB_HOST"] %>
     password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
+  cache:
+    <<: *primary_production
+    database: myapp_prod
+    username: postgres
+    host: <%= ENV["DB_HOST"] %>
+    password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: myapp_prod
+    username: postgres
+    host: <%= ENV["DB_HOST"] %>
+    password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: myapp_prod
+    username: postgres
+    host: <%= ENV["DB_HOST"] %>
+    password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
+    migrations_paths: db/cable_migrate
