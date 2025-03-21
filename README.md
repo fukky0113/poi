@@ -1,23 +1,10 @@
-! Railsプロジェクトの立ち上げ
-## 構成
-ruby 3.2.1
-rails 7.0.4.2
-postgres latest
-# Dockerコマンド
-> - docker compose run --rm --no-deps web rails new . --force --database=postgresql
-> - docker compose build
-> - docker compose run --rm web rails db:create
-> - docker compose up
+# README
+## ポートフォリオ
+ - ゴミ投稿サイト
+    > 写真・種類・場所・コメントの投稿から、ゴミの見える化を行う。
+    > また、ランキングやマップを通じ、ユーザーのゴミ削減に向けた意識改善を行う。
 
-
-# POI
-## やること
- - ゴミ投稿アプリ
-    - 写真・位置情報・種類を投稿し、ランキングやマップを通じ、ゴミを可視化。
-    - ゴミ削減に向けた意識改革
-
-## 機能
-
+## 機能一覧
  - 投稿
     - 投稿作成
         > 写真、ごみの種類、位置情報、コメントを投稿
@@ -41,7 +28,7 @@ postgres latest
         > マイページ(投稿履歴、統計データ、etc)、投稿管理
 
 - ゲーミフィケーション
-    - バッジ機能
+    - バッジ機能(未実装)
         > 10回投稿で「投稿マスター」などの称号
     - いいね・コメント
         > 他の投稿をいいね。コメントできる。
@@ -49,6 +36,34 @@ postgres latest
 - 認証
     - ユーザー登録・ログイン
         > メール&パスワード認証
+
+## 機能画像
+|ホーム画面|投稿一覧|
+|---|---|
+|ゴミ分布マップや円グラフをページの上部に表示することで、新規ユーザーの関心が湧くように設計。ランキングにより、既存ユーザーのモチベーション向上。投稿のトップに画像を表示することで、投稿への関心を高める。いいねボタンからユーザーが互いにモチベーションを向上しあう。|投稿一覧|
+|![alt text](README/home.png)|![alt text](README/post_index.png)|
+
+
+|マイページ|投稿詳細|
+|---|---|
+|マイページ|投稿詳細|
+|![alt text](README/user_show.png)|![alt text](README/post_show.png)|
+
+|新規投稿|ログイン|
+|---|---|
+|新規投稿|ログイン|
+|![alt text](README/post_new.png)|![alt text](README/login.png)|
+
+# 使用技術
+|Category|Technology Stack|
+|---|---|
+|Frontend|Bootstrap(v5.3.3)|
+|Backend|Ruby(v3.2.1), RubyonRails(v8.0.2), Puma(v5.0), Nginx(v1.26)|
+|Infrastructure|AWS(ECR/ECS, S3, RDS, VPC)|
+|Database|Postgres(v16.3)|
+|Environment setup|Docker(v27.3.1)|
+|CI/CD|GithubActions|
+
 
 ## 設計
 - Userモデル
@@ -59,5 +74,5 @@ postgres latest
 ## ER図
 ![ER図](./README/ER図.png)
 
-## 要素
-![要素](./README/youso.png)
+## システム構成図+s3
+![システム構成図](./README/構成図.png)
