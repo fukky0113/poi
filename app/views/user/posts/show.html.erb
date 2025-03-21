@@ -27,7 +27,7 @@
                         <ul class="list-group list-group-flush">
                         <% @comment.each do |comment| %>
                             <li class="list-group-item">
-                                @<%= link_to comment.user.name, user_path(@post.user.id) %>
+                                @<%= link_to comment.user.name, user_path(@comment.user.id) %>
                                 <br>
                                 <%= comment.comment %>
                             </li>
