@@ -41,7 +41,7 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 # developer-add
-gem "bcrypt", "3.1.18"
+gem "bcrypt", "3.1.20"
 gem "faker", "2.21.0"
 gem "rails-controller-testing"
 gem "bootstrap", "~> 5.3.0"
