@@ -42,7 +42,7 @@ gem "thruster", require: false
 
 # developer-add
 gem "bcrypt", "3.1.18"
-gem "faker", "2.21.0"
+gem "faker", "3.5.1"
 gem "rails-controller-testing"
 gem "bootstrap", "~> 5.3.0"
 gem "jquery-rails"
