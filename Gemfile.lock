@@ -202,8 +202,8 @@ GEM
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.4)
-    libv8-node (18.19.0.0-aarch64-linux)
-    libv8-node (18.19.0.0-x86_64-linux)
+    libv8-node (23.6.1.0-aarch64-linux)
+    libv8-node (23.6.1.0-x86_64-linux)
     lint_roller (1.1.0)
     logger (1.6.6)
     loofah (2.24.0)
@@ -217,8 +217,8 @@ GEM
     marcel (1.0.4)
     matrix (0.4.2)
     mini_mime (1.1.5)
-    mini_racer (0.16.0)
-      libv8-node (~> 18.19.0.0)
+    mini_racer (0.18.0)
+      libv8-node (~> 23.6.1.0)
     minitest (5.25.5)
     msgpack (1.8.0)
     multi_json (1.15.0)
@@ -444,7 +444,7 @@ DEPENDENCIES
   jquery-rails
   kamal
   kaminari
-  mini_racer (= 0.16.0)
+  mini_racer (= 0.18.0)
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
