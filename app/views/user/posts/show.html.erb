@@ -14,7 +14,7 @@
             <div class="card-body">
                 <h5>投稿</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">@<%= link_to @user.name, user_path(@user) %></li>
+                    <li class="list-group-item">@<%= link_to @post.user.name, user_path(@post.user.id) %></li>
                     <li class="list-group-item"><%= @post.point %></li>
                     <li class="list-group-item"><%= @post.description %></li>
                     <li class="list-group-item"><%= @category.g_type %></li>
@@ -27,7 +27,7 @@
                         <ul class="list-group list-group-flush">
                         <% @comment.each do |comment| %>
                             <li class="list-group-item">
-                                @<%= link_to comment.user.name, user_path(@user) %>
+                                @<%= link_to comment.user.name, user_path(@post.user.id) %>
                                 <br>
                                 <%= comment.comment %>
                             </li>
