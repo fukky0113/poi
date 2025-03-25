@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:user_id])
-    @post = Post.where(user_id: params[:user_id]).page(params[:page]).per(21)
+    @post = Post.where(user_id: params[:user_id]).order(created_at: "DESC").page(params[:page]).per(21)
   end
 
   def edit
