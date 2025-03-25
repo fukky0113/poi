@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [ :index, :edit, :update, :show, :destroy ]
-  before_action :correct_user, only: [ :edit, :update ]
+  before_action :correct_user_id, only: [ :edit, :update ]
   before_action :admin_user, only: [ :index, :destroy, :create ]
 
   def new
@@ -23,16 +23,16 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:user_id])
-    @post = Post.where(user_id: params[:user_id]).order(created_at: "DESC").page(params[:page]).per(21)
+    @user = User.find(params[:id])
+    @post = Post.where(user_id: params[:id]).order(created_at: "DESC").page(params[:page]).per(21)
   end
 
   def edit
-    @user = User.find(params[:user_id])
+    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:user_id])
+    @user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to @user, status: :see_other
     else
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:user_id]).destroy
+    User.find(params[:id]).destroy
     redirect_to user_path, status: :see_other
   end
 

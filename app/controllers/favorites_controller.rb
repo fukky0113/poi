@@ -1,4 +1,4 @@
-class User::FavoritesController < ApplicationController
+class FavoritesController < ApplicationController
   def create
     @favorite = Favorite.new
     @favorite.user_id = params[:user_id]
