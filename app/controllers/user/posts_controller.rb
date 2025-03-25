@@ -1,6 +1,6 @@
 class User::PostsController < ApplicationController
   before_action :logged_in_user, only: [ :index, :new, :create, :show, :destroy ]
-  before_action :correct_user, only: [ :index, :new, :create, :show ]
+  before_action :correct_user, only: [ :index, :new, :create, :show, :destroy ]
 
   def index
     @post = Post.all.order(created_at: "DESC")

@@ -30,6 +30,10 @@
                                 @<%= link_to comment.user.name, user_path(@post.user.id) %>
                                 <br>
                                 <%= comment.comment %>
+                                <% if comment.user == current_user %>
+                                    <%= link_to "削除", user_post_comment_path(user_id: current_user, post_id: @post, id: comment), data: { "turbo-method": :delete,
+                                    turbo_confirm: "You sure?" } %>
+                                <%end%>
                             </li>
                         <% end %>
                         </ul>
