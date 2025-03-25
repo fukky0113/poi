@@ -22,25 +22,8 @@
                         <li class="list-group-item">地域　　：<%= post.point %></li>
                         <li class="list-group-item"><%= post.description.slice(0,20) %>...</li>
 
-                        <div class="my-1 mx-3" style="  display: flex; justify-content: flex-end;">
-                            <% if logged_in? %>
-                                <% if post.favorited_by?(current_user, post) %>
-                                    <%= link_to image_tag("like_off.png", size: '24x24', class: "mb-1"), user_post_favorites_path(user_id: current_user, post_id: post.id), data: { "turbo-method": :delete } %>
-                                    ：
-                                    <%= post.favorites.count %>
-                                <% else %>
-                                    <%= link_to image_tag("like_on.png", size: '24x24', class: "mb-1"), user_post_favorites_path(user_id: current_user, post_id: post.id), data: { "turbo-method": :post } %>
-                                    ：
-                                    <%= post.favorites.count %>
-                                <% end %>
-                            <% else %>
-                                <p>
-                                    <%= image_tag("like_off.png", class: "mb-1", size: '24x24') %>
-                                    <%= post.favorites.count %>
-                                </p>
-                            <% end %>
-                        </div>
-
+                        <%= render partial: 'layouts/favo', locals: {post: post} %>
+                
                         <% if logged_in? %>
                             <%= link_to "詳細", user_post_path(user_id: current_user, id: post.id), class: "btn btn-primary" %>
                         <% else %>
