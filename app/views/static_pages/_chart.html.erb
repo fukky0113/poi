@@ -1,0 +1,41 @@
+<script>
+    var ctx = document.getElementById('<%= id %>').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: <%= "gon."+labels %>,
+            datasets: [{
+                label: '# of Votes',
+                data: <%= "gon."+data %>,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(173, 255, 86, 0.2)',
+                    'rgba(86, 255, 114, 0.2)',
+                    'rgba(86, 230, 255, 0.2)',
+                    'rgba(213, 86, 255, 0.2)',
+                    'rgba(255, 86, 232, 0.2)',
+                    'rgba(255, 86, 170, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(20, 20, 20, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(248, 248, 248)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        plugins: [ChartDataLabels], 
+        options: {
+            plugins: {
+                legend: { display: false },
+                datalabels: { // パーセンテージからラベル表記に変更
+                    formatter: function(value, context) { 
+                        return context.chart.data.labels[context.dataIndex];
+                    }
+                }
+            }
+        }
+    });
+</script>
