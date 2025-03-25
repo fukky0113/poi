@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   # end
 
   resources :users do
-  # namespace :user, path: "users/:user_id/" do
+    # namespace :user, path: "users/:user_id/" do
     resources :posts, only: [ :index, :new, :create, :show, :destroy ] do
       resources :comments, only: [ :create, :destroy ]
       resource :favorites, only: [ :create, :destroy ]
